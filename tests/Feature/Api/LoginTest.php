@@ -2,7 +2,6 @@
 
 namespace Tests\Feature\Api;
 
-// use Illuminate\Foundation\Testing\RefreshDatabase;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use PHPUnit\Framework\Attributes\Test;
@@ -15,7 +14,7 @@ class LoginTest extends TestCase
     #[Test]
     public function user_can_login_with_valid_credentials(): void
     {
-        User::factory()->create([
+        $user = User::factory()->create([
             'email' => 'john@example.com',
             'password' => 'password',
         ]);
@@ -25,6 +24,27 @@ class LoginTest extends TestCase
             'password' => 'password',
         ]);
 
+        $this->assertAuthenticatedAs($user);
         $response->assertStatus(200);
+    }
+
+    #[Test]
+    public function user_cannot_login_is_email_doesnt_exist(): void
+    {
+        $response = $this->post('/api/v1/login', [
+            'email' => 'john@example.com',
+            'password' => 'password',
+        ]);
+
+        $response->assertStatus(422);
+
+        $response->assertExactJson([
+            "message" => "Error de validación.",
+            "errors" => [
+                "email" => [
+                    "El email proporcionado no está registrado."
+                ]
+            ]
+        ]);
     }
 }

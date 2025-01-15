@@ -4,6 +4,8 @@ namespace App\Http\Requests\Api\v1;
 
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Http\Exceptions\HttpResponseException;
+use Illuminate\Contracts\Validation\Validator;
 
 class LoginUserRequest extends FormRequest
 {
@@ -26,5 +28,21 @@ class LoginUserRequest extends FormRequest
             'email' => 'required|exists:users,email',
             'password' => 'required|string|min:8',
         ];
+    }
+
+    public function messages()
+    {
+        return [
+            'email.required' => 'El campo email es obligatorio.',
+            'email.exists' => 'El email proporcionado no está registrado.',
+        ];
+    }
+
+    public function failedValidation(Validator $validator)
+    {
+        throw new HttpResponseException(response()->json([
+            'message' => 'Error de validación.',
+            'errors' => $validator->errors(),
+        ], 422));
     }
 }
