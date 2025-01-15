@@ -3,21 +3,23 @@
 namespace Database\Seeders;
 
 use App\Models\User;
-// use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Hash;
 
 class DatabaseSeeder extends Seeder
 {
+    protected array $users = [
+        ['name' => 'Armando Calderón', 'email' => 'armando@gmail.com'],
+        ['name' => 'Guillermo Rodriguez', 'email' => 'guillermo.rodriguez@banpay.com'],
+    ];
+
     /**
-     * Seed the application's database.
+     * Run the database seeds.
      */
     public function run(): void
     {
-        // User::factory(10)->create();
-
-        User::factory()->create([
-            'name' => 'Test User',
-            'email' => 'test@example.com',
-        ]);
+        foreach ($this->users as $data) {
+            User::firstOrCreate($data, ['password' => Hash::make('password')])->assignRole('admin');
+        }
     }
 }
