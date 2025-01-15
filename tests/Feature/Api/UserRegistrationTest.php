@@ -65,6 +65,27 @@ class UserRegistrationTest extends TestCase
     }
 
     #[Test]
+    public function other_roles_cannot_create_a_user()
+    {
+        $user = User::factory()->films()->create();
+
+        $response = $this->actingAs($user)->post('/api/v1/users', $this->validAttributes([
+            'role' => 'people',
+        ]));
+
+        $response->assertStatus(403);
+
+        $response->assertExactJson([
+            "status" => "error",
+            "message" => "No está autorizado para realizar esta acción.",
+            "errors" => [
+                "authorization" => "Acceso denegado"
+            ],
+            "code" => 403
+        ]);
+    }
+
+    #[Test]
     public function display_error_message_when_using_a_previously_used_email()
     {
         $user = User::factory()->admin()->create([
@@ -79,12 +100,14 @@ class UserRegistrationTest extends TestCase
         $response->assertStatus(422);
 
         $response->assertExactJson([
-            'message' => 'Error de validación.',
+            'status' => 'error',
+            'message' => 'Los datos proporcionados no son válidos.',
             'errors' => [
                 'email' => [
                     'El valor del campo correo electrónico ya está en uso.',
                 ]
-            ]
+            ],
+            'code' => 422,
         ]);
     }
 
@@ -100,12 +123,14 @@ class UserRegistrationTest extends TestCase
         $response->assertStatus(422);
 
         $response->assertExactJson([
-            'message' => 'Error de validación.',
+            'status' => 'error',
+            'message' => 'Los datos proporcionados no son válidos.',
             'errors' => [
                 $field => [
                     $message,
                 ]
-            ]
+            ],
+            'code' => 422,
         ]);
     }
 
