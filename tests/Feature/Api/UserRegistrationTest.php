@@ -64,6 +64,30 @@ class UserRegistrationTest extends TestCase
         $this->assertTrue($user->hasRole('films'));
     }
 
+    #[Test]
+    public function display_error_message_when_using_a_previously_used_email()
+    {
+        $user = User::factory()->admin()->create([
+            'email' => 'john_doe@gmail.com',
+        ]);
+
+        $response = $this->actingAs($user)->post('/api/v1/users', $this->validAttributes([
+            'email' => 'john_doe@gmail.com',
+            'role' => 'films',
+        ]));
+
+        $response->assertStatus(422);
+
+        $response->assertExactJson([
+            'message' => 'Error de validación.',
+            'errors' => [
+                'email' => [
+                    'El valor del campo correo electrónico ya está en uso.',
+                ]
+            ]
+        ]);
+    }
+
     #[DataProvider('userRegistrationValidationScenarios')]
     public function test_fields_to_validate_a_user($field, $input, $message)
     {
