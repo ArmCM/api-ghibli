@@ -61,7 +61,7 @@ class LoginTest extends TestCase
     }
 
     #[Test]
-    public function show_error_message_when_send_invalid_format_email(): void
+    public function display_error_message_when_send_invalid_format_email(): void
     {
         $response = $this->post('/api/v1/login', [
             'email' => 'invalid-email',
@@ -81,7 +81,7 @@ class LoginTest extends TestCase
     }
 
     #[Test]
-    public function show_error_message_when_send_invalid_format_length_password(): void
+    public function display_error_message_when_send_invalid_format_length_password(): void
     {
         $user = User::factory()->create([
             'email' => 'john@example.com',
@@ -106,7 +106,7 @@ class LoginTest extends TestCase
     }
 
     #[Test]
-    public function show_error_message_when_send_invalid_format_password(): void
+    public function display_error_message_when_send_invalid_format_password(): void
     {
         $user = User::factory()->create([
             'email' => 'john@example.com',
@@ -127,7 +127,7 @@ class LoginTest extends TestCase
     }
 
     #[Test]
-    public function show_error_message_when_send_empty_password(): void
+    public function display_error_message_when_send_empty_password(): void
     {
         $user = User::factory()->create([
             'email' => 'john@example.com',
