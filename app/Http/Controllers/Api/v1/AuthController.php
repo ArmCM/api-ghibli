@@ -16,7 +16,7 @@ class AuthController extends Controller
     public function login(LoginUserRequest $request): JsonResponse
     {
         if (!Auth::attempt($request->validated())) {
-            return $this->error('Credentials not match', 401);
+            return $this->error(__('auth.failed'), 401);
         }
 
         $user = User::firstWhere('email', $request->validated('email'));
