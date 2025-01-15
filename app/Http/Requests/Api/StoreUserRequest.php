@@ -27,7 +27,7 @@ class StoreUserRequest extends FormRequest
     {
         return [
             'name' => 'required|not_regex:/[^a-zA-ZñÑáéíóúÁÉÍÓÚ\s]/|between:2,75',
-            'email' => 'email:rfc,dns',
+            'email' => 'email:rfc,dns|unique:users,email',
             'password' => 'required|between:8,20',
             'role' => [
                 'required', Rule::in([
