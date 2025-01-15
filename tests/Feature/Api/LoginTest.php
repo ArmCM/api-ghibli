@@ -47,4 +47,24 @@ class LoginTest extends TestCase
             ]
         ]);
     }
+
+    #[Test]
+    public function show_error_message_when_send_invalid_format_email(): void
+    {
+        $response = $this->post('/api/v1/login', [
+            'email' => 'invalid-email',
+            'password' => 'password',
+        ]);
+
+        $response->assertStatus(422);
+
+        $response->assertExactJson([
+            "message" => "Error de validación.",
+            "errors" => [
+                "email" => [
+                    "El formato del email no es válido."
+                ]
+            ]
+        ]);
+    }
 }

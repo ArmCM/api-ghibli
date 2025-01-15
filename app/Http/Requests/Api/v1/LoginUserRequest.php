@@ -25,7 +25,7 @@ class LoginUserRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'email' => 'required|exists:users,email',
+            'email' => 'required|email|exists:users,email',
             'password' => 'required|string|min:8',
         ];
     }
@@ -34,6 +34,7 @@ class LoginUserRequest extends FormRequest
     {
         return [
             'email.required' => 'El campo email es obligatorio.',
+            'email.email' => 'El formato del email no es válido.',
             'email.exists' => 'El email proporcionado no está registrado.',
         ];
     }
