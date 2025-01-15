@@ -25,7 +25,19 @@ class LoginTest extends TestCase
         ]);
 
         $this->assertAuthenticatedAs($user);
-        $response->assertStatus(200);
+
+        $response->assertJson([
+            'message' => 'Authenticated',
+            'status_code' => 200,
+        ]);
+
+        $response->assertJsonStructure([
+            'data' => [
+                'token',
+            ],
+            'message',
+            'status_code',
+        ]);
     }
 
     #[Test]
