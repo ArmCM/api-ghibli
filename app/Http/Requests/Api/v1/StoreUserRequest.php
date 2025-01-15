@@ -1,21 +1,19 @@
 <?php
 
-namespace App\Http\Requests\Api;
+namespace App\Http\Requests\Api\v1;
 
+use App\Http\Requests\Api\ApiFormRequest;
 use Illuminate\Contracts\Validation\ValidationRule;
-use Illuminate\Contracts\Validation\Validator;
-use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Validation\Rule;
 
-class StoreUserRequest extends FormRequest
+class StoreUserRequest extends ApiFormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
      */
     public function authorize(): bool
     {
-        return true;
+        return auth()->user()->hasRole('admin');
     }
 
     /**
@@ -37,15 +35,8 @@ class StoreUserRequest extends FormRequest
                     'locations',
                     'species',
                     'vehicles',
-                ])],
+                ])
+            ],
         ];
-    }
-
-    public function failedValidation(Validator $validator)
-    {
-        throw new HttpResponseException(response()->json([
-            'message' => 'Error de validación.',
-            'errors' => $validator->errors(),
-        ], 422));
     }
 }
