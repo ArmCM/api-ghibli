@@ -30,15 +30,6 @@ class LoginUserRequest extends FormRequest
         ];
     }
 
-    public function messages()
-    {
-        return [
-            'email.required' => 'El campo email es obligatorio.',
-            'email.email' => 'El formato del email no es válido.',
-            'email.exists' => 'El email proporcionado no está registrado.',
-        ];
-    }
-
     public function failedValidation(Validator $validator)
     {
         throw new HttpResponseException(response()->json([
