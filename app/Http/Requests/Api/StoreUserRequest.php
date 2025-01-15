@@ -3,7 +3,9 @@
 namespace App\Http\Requests\Api;
 
 use Illuminate\Contracts\Validation\ValidationRule;
+use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Validation\Rule;
 
 class StoreUserRequest extends FormRequest
@@ -37,5 +39,13 @@ class StoreUserRequest extends FormRequest
                     'vehicles',
                 ])],
         ];
+    }
+
+    public function failedValidation(Validator $validator)
+    {
+        throw new HttpResponseException(response()->json([
+            'message' => 'Error de validación.',
+            'errors' => $validator->errors(),
+        ], 422));
     }
 }
