@@ -90,7 +90,7 @@ class UserFactory extends Factory
     public function admin()
     {
         return $this->state(fn ($attributes) => [
-            'name' => 'admin',
+            'email' => 'admin@example.com',
         ])->afterCreating(function (User $user) {
             $this->executeInTransaction(function () use ($user) {
                 $this->createPermissions('admin');
@@ -104,7 +104,7 @@ class UserFactory extends Factory
     public function films()
     {
         return $this->state(fn ($attributes) => [
-            'name' => 'films',
+            'email' => 'films@example.com',
         ])->afterCreating(function (User $user) {
             $this->executeInTransaction(function () use ($user) {
                 $this->createPermissions('films');
@@ -118,7 +118,7 @@ class UserFactory extends Factory
     public function people()
     {
         return $this->state(fn ($attributes) => [
-            'name' => 'people',
+            'email' => 'people@example.com',
         ])->afterCreating(function (User $user) {
             $this->executeInTransaction(function () use ($user) {
                 $this->createPermissions('people');
@@ -132,7 +132,7 @@ class UserFactory extends Factory
     public function locations()
     {
         return $this->state(fn ($attributes) => [
-            'name' => 'locations',
+            'email' => 'locations@example.com',
         ])->afterCreating(function (User $user) {
             $this->executeInTransaction(function () use ($user) {
                 $this->createPermissions('locations');
@@ -146,7 +146,7 @@ class UserFactory extends Factory
     public function species()
     {
         return $this->state(fn ($attributes) => [
-            'name' => 'species',
+            'email' => 'species@example.com',
         ])->afterCreating(function (User $user) {
             $this->executeInTransaction(function () use ($user) {
                 $this->createPermissions('species');
@@ -160,7 +160,7 @@ class UserFactory extends Factory
     public function vehicles()
     {
         return $this->state(fn ($attributes) => [
-            'name' => 'vehicles',
+            'email' => 'vehicles@example.com',
         ])->afterCreating(function (User $user) {
             $this->executeInTransaction(function () use ($user) {
                 $this->createPermissions('vehicles');
