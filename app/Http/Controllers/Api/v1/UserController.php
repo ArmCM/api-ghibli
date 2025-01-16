@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api\v1;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\v1\StoreUserRequest;
+use App\Http\Requests\Api\v1\UpdateUserRequest;
 use App\Http\Resources\UserResource;
 use App\Models\User;
 use Illuminate\Http\JsonResponse;
@@ -50,9 +51,21 @@ class UserController extends Controller
         //
     }
 
-    public function update(Request $request, string $id)
+    public function update(UpdateUserRequest $request, User $user)
     {
-        //
+        $validatedData = $request->validated();
+
+        tap(User::findOrFail($user->id), function ($user) use ($validatedData) {
+            $user->name = $validatedData['name'];
+            $user->email = $validatedData['email'];
+            $user->password = Hash::make($validatedData['password']);
+            $user->assignRole($validatedData['role']);
+            $user->save();
+        });
+
+        return response()->json([
+            'message' => 'Usuario actualizado exitosamente.',
+        ], 201);
     }
 
     public function destroy(string $id)
