@@ -51,15 +51,22 @@ class UserController extends Controller
         //
     }
 
-    public function update(UpdateUserRequest $request, User $user)
+    public function update(UpdateUserRequest $request, User $user): JsonResponse
     {
         $validatedData = $request->validated();
 
         tap(User::findOrFail($user->id), function ($user) use ($validatedData) {
-            $user->name = $validatedData['name'];
-            $user->email = $validatedData['email'];
-            $user->password = Hash::make($validatedData['password']);
-            $user->assignRole($validatedData['role']);
+            $user->fill(collect($validatedData)
+                ->only(['name', 'email'])
+                ->when($validatedData['password'] ?? null, function ($collection) use ($validatedData) {
+                    return $collection->put('password', Hash::make($validatedData['password']));
+                })
+                ->toArray()
+            );
+
+            optional($validatedData)['role'] && $user->syncRoles($validatedData['role']);
+
+
             $user->save();
         });
 

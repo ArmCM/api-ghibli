@@ -13,7 +13,7 @@ class UpdateUserRequest extends ApiFormRequest
      */
     public function authorize(): bool
     {
-        return auth()->user()->hasRole('admin');
+        return auth()->id() === $this->user()->id || $this->user()->hasRole('admin');
     }
 
     /**
@@ -24,11 +24,11 @@ class UpdateUserRequest extends ApiFormRequest
     public function rules(): array
     {
         return [
-            'name' => 'required|not_regex:/[^a-zA-ZñÑáéíóúÁÉÍÓÚ\s]/|between:2,75',
-            'email' => 'email:rfc,dns|unique:users,email',
-            'password' => 'required|between:8,20',
+            'name' => 'sometimes|not_regex:/[^a-zA-ZñÑáéíóúÁÉÍÓÚ\s]/|between:2,75',
+            'email' => 'sometimes|email:rfc,dns',
+            'password' => 'sometimes|between:8,20',
             'role' => [
-                'required', Rule::in([
+                'sometimes', Rule::in([
                     'admin',
                     'films',
                     'people',
