@@ -7,6 +7,7 @@ use App\Http\Requests\Api\v1\LoginUserRequest;
 use App\Models\User;
 use App\Traits\ApiResponses;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class AuthController extends Controller
@@ -24,5 +25,12 @@ class AuthController extends Controller
         return $this->ok('Authenticated', [
             'token' => $user->createToken('api token for'. $user->email)->plainTextToken,
         ]);
+    }
+
+    public function logout(Request $request): JsonResponse
+    {
+        $request->user()->currentAccessToken()->delete();
+
+        return $this->ok('Logged out');
     }
 }

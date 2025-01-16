@@ -4,6 +4,7 @@ namespace Tests\Feature\Api;
 
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Laravel\Sanctum\Sanctum;
 use PHPUnit\Framework\Attributes\Test;
 use Tests\TestCase;
 
@@ -149,5 +150,23 @@ class LoginTest extends TestCase
                 ]
             ]
         ]);
+    }
+
+    #[Test]
+    public function user_can_logout(): void
+    {
+        $user = User::factory()->admin()->create();
+
+        Sanctum::actingAs($user);
+
+        $response = $this->postJson('/api/v1/logout');
+
+        $response->assertStatus(200)
+            ->assertJson([
+                'status' => 'success',
+                'message' => 'Logged out',
+                'data' => [],
+                'status_code' => 200,
+            ]);
     }
 }
