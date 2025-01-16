@@ -22,6 +22,7 @@ class UserFactory extends Factory
             'view.locations',
             'view.species',
             'view.vehicles',
+            'view.users',
             'view.user',
             'store.user',
             'update.user',
