@@ -48,4 +48,17 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    /*
+    |--------------------------------------------------------------------------
+    | Scopes
+    |--------------------------------------------------------------------------
+    */
+
+    public function scopeExcludeAdmin($query)
+    {
+        return $query->whereDoesntHave('roles', function ($query) {
+            $query->where('name', 'admin');
+        });
+    }
 }

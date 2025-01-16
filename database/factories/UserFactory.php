@@ -71,9 +71,11 @@ class UserFactory extends Factory
      */
     public function definition(): array
     {
+        $validDomains = ['gmail.com', 'yahoo.com', 'outlook.com', 'hotmail.com'];
+
         return [
             'name' => fake()->name(),
-            'email' => fake()->unique()->safeEmail(),
+            'email' => fake()->unique()->userName . '@' . fake()->randomElement($validDomains),
             'email_verified_at' => now(),
             'password' => static::$password ??= Hash::make('password'),
             'remember_token' => Str::random(10),
@@ -90,7 +92,7 @@ class UserFactory extends Factory
     public function admin()
     {
         return $this->state(fn ($attributes) => [
-            'email' => 'admin@example.com',
+            'email' => fake()->unique()->userName . '@gmail.com',
         ])->afterCreating(function (User $user) {
             $this->executeInTransaction(function () use ($user) {
                 $this->createPermissions('admin');
@@ -104,7 +106,7 @@ class UserFactory extends Factory
     public function films()
     {
         return $this->state(fn ($attributes) => [
-            'email' => 'films@example.com',
+            'email' => fake()->unique()->userName . '@gmail.com',
         ])->afterCreating(function (User $user) {
             $this->executeInTransaction(function () use ($user) {
                 $this->createPermissions('films');
@@ -118,7 +120,7 @@ class UserFactory extends Factory
     public function people()
     {
         return $this->state(fn ($attributes) => [
-            'email' => 'people@example.com',
+            'email' => fake()->unique()->userName . '@gmail.com',
         ])->afterCreating(function (User $user) {
             $this->executeInTransaction(function () use ($user) {
                 $this->createPermissions('people');
@@ -132,7 +134,7 @@ class UserFactory extends Factory
     public function locations()
     {
         return $this->state(fn ($attributes) => [
-            'email' => 'locations@example.com',
+            'email' => fake()->unique()->userName . '@gmail.com',
         ])->afterCreating(function (User $user) {
             $this->executeInTransaction(function () use ($user) {
                 $this->createPermissions('locations');
@@ -146,7 +148,7 @@ class UserFactory extends Factory
     public function species()
     {
         return $this->state(fn ($attributes) => [
-            'email' => 'species@example.com',
+            'email' => fake()->unique()->userName . '@gmail.com',
         ])->afterCreating(function (User $user) {
             $this->executeInTransaction(function () use ($user) {
                 $this->createPermissions('species');
@@ -160,7 +162,7 @@ class UserFactory extends Factory
     public function vehicles()
     {
         return $this->state(fn ($attributes) => [
-            'email' => 'vehicles@example.com',
+            'email' => fake()->unique()->userName . '@gmail.com',
         ])->afterCreating(function (User $user) {
             $this->executeInTransaction(function () use ($user) {
                 $this->createPermissions('vehicles');
