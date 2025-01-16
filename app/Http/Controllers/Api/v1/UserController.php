@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
+
     public function index()
     {
         Gate::authorize('viewAny', User::class);
@@ -37,9 +38,9 @@ class UserController extends Controller
         ], 201);
     }
 
-    public function show(string $id)
+    public function show(User $user)
     {
-        //
+        return UserResource::make($user);
     }
 
     public function edit(string $id)
