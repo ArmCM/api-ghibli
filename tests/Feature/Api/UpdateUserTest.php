@@ -5,7 +5,6 @@ namespace Tests\Feature\Api;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use PHPUnit\Framework\Attributes\Test;
-use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
 use Tests\TestCase;
 
@@ -51,6 +50,57 @@ class UpdateUserTest extends TestCase
         $this->assertDatabaseHas('users', [
             'name' => 'jane doe',
             'email' => 'jane_doe@gmail.com',
+        ]);
+    }
+
+    #[Test]
+    public function a_user_can_update_only_his_own_detail_information()
+    {
+        $user = User::factory()->films()->create([
+            'name' => 'john doe',
+            'email' => 'john_01@gmail.com',
+        ]);
+
+        $response = $this->actingAs($user)->patch("/api/v1/users/$user->id", [
+            'name' => 'jane doe',
+            'email' => 'jane_doe@gmail.com',
+            'password' => 'new-password',
+            'role' => 'species',
+        ]);
+
+        $response->assertStatus(201);
+
+        $response->assertJson([
+            'message' => 'Usuario actualizado exitosamente.',
+        ]);
+
+        $this->assertDatabaseHas('users', [
+            'name' => 'jane doe',
+            'email' => 'jane_doe@gmail.com',
+        ]);
+    }
+
+    #[Test]
+    public function a_user_can_update_partial_detail_information()
+    {
+        $user = User::factory()->films()->create([
+            'name' => 'john doe',
+            'email' => 'john_01@gmail.com',
+        ]);
+
+        $response = $this->actingAs($user)->patch("/api/v1/users/$user->id", [
+            'name' => 'jane doe',
+        ]);
+
+        $response->assertStatus(201);
+
+        $response->assertJson([
+            'message' => 'Usuario actualizado exitosamente.',
+        ]);
+
+        $this->assertDatabaseHas('users', [
+            'name' => 'jane doe',
+            'email' => 'john_01@gmail.com',
         ]);
     }
 }
