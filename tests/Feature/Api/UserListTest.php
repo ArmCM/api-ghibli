@@ -5,11 +5,24 @@ namespace Tests\Feature\Api;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use PHPUnit\Framework\Attributes\Test;
+use Spatie\Permission\Models\Permission;
 use Tests\TestCase;
 
 class UserListTest extends TestCase
 {
     use RefreshDatabase;
+
+    /**
+     * Set up the test.
+     *
+     * @return void
+     */
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        Permission::create(['name' => 'view.users']);
+    }
 
     #[Test]
     public function an_admin_can_list_all_users()
@@ -44,5 +57,24 @@ class UserListTest extends TestCase
         $response->assertJsonFragment(['role' => 'vehicles']);
         $response->assertJsonFragment(['role' => 'people']);
         $response->assertJsonFragment(['role' => 'species']);
+    }
+
+    #[Test]
+    public function other_roles_cannot_list_a_users()
+    {
+        $user = User::factory()->films()->create();
+
+        $response = $this->actingAs($user)->get('/api/v1/users');
+
+        $response->assertStatus(403);
+
+        $response->assertExactJson([
+            "status" => "error",
+            "message" => "No está autorizado para realizar esta acción.",
+            "errors" => [
+                "authorization" => "Acceso denegado"
+            ],
+            "code" => 403
+        ]);
     }
 }
