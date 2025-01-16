@@ -52,7 +52,7 @@ class UserListTest extends TestCase
             ],
         ]);
 
-        $this->assertCount(9, $response->json('data'));
+        $this->assertCount(10, $response->json('data'));
 
         $response->assertJsonFragment(['role' => 'vehicles']);
         $response->assertJsonFragment(['role' => 'people']);
@@ -70,7 +70,7 @@ class UserListTest extends TestCase
 
         $response->assertExactJson([
             "status" => "error",
-            "message" => "No está autorizado para realizar esta acción.",
+            "message" => "No tienes permiso para ver usuarios.",
             "errors" => [
                 "authorization" => "Acceso denegado"
             ],

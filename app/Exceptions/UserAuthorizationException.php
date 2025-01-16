@@ -17,7 +17,7 @@ class UserAuthorizationException extends Exception
         throw new HttpResponseException(
             response()->json([
                 'status' => 'error',
-                'message' => 'No está autorizado para realizar esta acción.',
+                'message' => $this->message ?? 'No está autorizado para realizar esta acción.',
                 'errors' => [
                     'authorization' => 'Acceso denegado'
                 ],

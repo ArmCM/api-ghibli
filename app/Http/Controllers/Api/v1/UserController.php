@@ -18,7 +18,7 @@ class UserController extends Controller
     {
         Gate::authorize('viewAny', User::class);
 
-        return UserResource::collection(User::excludeAdmin()->paginate());
+        return UserResource::collection(User::paginate());
     }
 
     public function store(StoreUserRequest $request): JsonResponse
