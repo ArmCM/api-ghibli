@@ -14,21 +14,24 @@ class UserPolicy
      */
     public function viewAny(User $user): bool
     {
-        throw_if(
-            !$user->hasPermissionTo('view.users') || !$user->hasRole('admin'),
-            UserAuthorizationException::class,
-            'No tienes permiso para ver usuarios.'
-        );
+        if (!$user->hasPermissionTo('view.users') || !$user->hasRole('admin')) {
+            throw new UserAuthorizationException('No tienes permiso para ver usuarios.');
+        }
 
         return true;
     }
 
     /**
      * Determine whether the user can view the model.
+     * @throws UserAuthorizationException
      */
     public function view(User $user, User $model): bool
     {
-        return false;
+        if ($user->id !== $model->id && !$user->hasRole('admin')) {
+            throw new UserAuthorizationException('No tienes permiso para ver el perfil de otro usuario.');
+        }
+
+        return true;
     }
 
     /**

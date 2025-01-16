@@ -40,6 +40,8 @@ class UserController extends Controller
 
     public function show(User $user)
     {
+        Gate::authorize('view', $user);
+
         return UserResource::make($user);
     }
 
