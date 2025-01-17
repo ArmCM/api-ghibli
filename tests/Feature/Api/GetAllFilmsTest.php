@@ -100,7 +100,7 @@ class GetAllFilmsTest extends TestCase
     }
 
     #[Test]
-    public function displays_error_message_for_empty_query_result()
+    public function displays_error_message_for_empty_query_result_films_endpoint()
     {
         $user = User::factory()->films()->create();
 

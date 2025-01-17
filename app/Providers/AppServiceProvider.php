@@ -28,5 +28,13 @@ class AppServiceProvider extends ServiceProvider
 
             return true;
         });
+
+        Gate::define('view.all.vehicles', function ($user) {
+            if (!$user->can('view.vehicles') && !$user->hasRole('admin')) {
+                throw new UserAuthorizationException('No tienes permiso para consultar vehículos.');
+            }
+
+            return true;
+        });
     }
 }
