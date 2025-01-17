@@ -8,7 +8,6 @@ use App\Http\Requests\Api\v1\UpdateUserRequest;
 use App\Http\Resources\UserResource;
 use App\Models\User;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Hash;
 
@@ -46,11 +45,6 @@ class UserController extends Controller
         return UserResource::make($user);
     }
 
-    public function edit(string $id)
-    {
-        //
-    }
-
     public function update(UpdateUserRequest $request, User $user): JsonResponse
     {
         Gate::authorize('update', $user);
@@ -77,8 +71,12 @@ class UserController extends Controller
         ], 201);
     }
 
-    public function destroy(string $id)
+    public function destroy(User $user)
     {
-        //
+        $user->delete();
+
+        return response()->json([
+            'message' => 'Usuario eliminado exitosamente.',
+        ], 200);
     }
 }
