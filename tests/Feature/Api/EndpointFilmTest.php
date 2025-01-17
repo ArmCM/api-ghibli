@@ -7,7 +7,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use PHPUnit\Framework\Attributes\Test;
 use Tests\TestCase;
 
-class GetAllFilmsTest extends TestCase
+class EndpointFilmTest extends TestCase
 {
     use RefreshDatabase;
 

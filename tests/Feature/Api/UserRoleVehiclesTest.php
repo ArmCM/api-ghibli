@@ -87,7 +87,7 @@ class UserRoleVehiclesTest extends TestCase
 
         $response->assertExactJson([
             'status' => 'success',
-            'message' => 'Vehículos encontrados',
+            'message' => 'Recursos encontrados',
             'data' => [
                 [
                     'id' => '4e09b023-f650-4747-9ab9-eacf14540cfb',

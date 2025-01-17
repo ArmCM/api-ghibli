@@ -79,7 +79,7 @@ class EndpointPeopleTest extends TestCase
     {
         $user = User::factory()->people()->create();
 
-        $response = $this->actingAs($user)->get("/api/v1/people/2baf70d1-42bb-4437-b551-e5fed5a87abe?fields=id,title,original_title");
+        $response = $this->actingAs($user)->get("/api/v1/people/267649ac-fb1b-11eb-9a03-0242ac130003?fields=id,name,gender,eye_color");
 
         $response->assertStatus(200);
 
@@ -87,12 +87,13 @@ class EndpointPeopleTest extends TestCase
 
         $response->assertExactJson([
             'status' => 'success',
-            'message' => 'Peliculas encontradas',
+            'message' => 'Personas encontradas',
             'data' => [
                 [
-                    'id' => '2baf70d1-42bb-4437-b551-e5fed5a87abe',
-                    'title' => 'Castle in the Sky',
-                    'original_title' => "天空の城ラピュタ",
+                    'eye_color' => 'Green',
+                    'gender' => 'Male',
+                    'id' => '267649ac-fb1b-11eb-9a03-0242ac130003',
+                    'name' => 'Haku'
                 ]
             ],
             'status_code' => 200
