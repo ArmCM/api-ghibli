@@ -21,7 +21,7 @@ trait ApiResponses
         ], $statusCode);
     }
 
-    protected function error($message, $statusCode): JsonResponse
+    protected function error(string $message, int $statusCode): JsonResponse
     {
         return response()->json([
             'message' => $message,
