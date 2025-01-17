@@ -12,11 +12,11 @@ class FilmController extends Controller
 {
     use ApiResponses;
 
-    public function index()
+    public function index(Request $request)
     {
         Gate::authorize('view.all.films');
 
-        $response = Http::get('https://ghibliapi.vercel.app/films');
+        $response = Http::get('https://ghibliapi.vercel.app/films', $request->query());
 
         if ($response->failed()) {
             $this->error('No se pudo conectar al servicio externo.', $response->status());
