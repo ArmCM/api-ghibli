@@ -36,5 +36,13 @@ class AppServiceProvider extends ServiceProvider
 
             return true;
         });
+
+        Gate::define('view.all.people', function ($user) {
+            if (!$user->can('view.people') && !$user->hasRole('admin')) {
+                throw new UserAuthorizationException('No tienes permiso para consultar personas.');
+            }
+
+            return true;
+        });
     }
 }
