@@ -2,32 +2,12 @@
 
 namespace App\Utils;
 
-use Illuminate\Support\Str;
-
 class QueryStringFormat
 {
-    public static function toArray(string $queryString): array
+    public static function toArray(array $requestQuery, $filmId): array
     {
-        return collect(self::splitQueryString($queryString))
-            ->mapWithKeys(fn ($pair) => self::createKeyValueArray($pair))
-            ->mapWithKeys(fn ($value, $key) => [self::normalizeKeys($key) => $value])
+        return collect($requestQuery)
+            ->merge(['id' => $filmId])
             ->toArray();
-    }
-
-    protected static function splitQueryString(string $queryString): array
-    {
-        return explode(',',  urldecode($queryString));
-    }
-
-    protected static function createKeyValueArray($pair): array
-    {
-        [$key, $value] = array_pad(explode('=', $pair, 2), 2, null);
-
-        return [$key => $value];
-    }
-
-    protected static function normalizeKeys(string $key): string
-    {
-        return Str::replace('_', '-', $key);
     }
 }

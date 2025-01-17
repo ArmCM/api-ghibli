@@ -30,5 +30,6 @@ Route::middleware('auth:sanctum')->group(function () {
     */
 
     Route::get('/films', [FilmController::class, 'index']);
+    Route::get('/films/{id}', [FilmController::class, 'show']);
 
 });
