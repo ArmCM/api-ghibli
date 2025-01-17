@@ -3,6 +3,7 @@
 use App\Http\Controllers\Api\v1\AuthController;
 use App\Http\Controllers\Api\v1\FilmController;
 use App\Http\Controllers\Api\v1\UserController;
+use App\Http\Controllers\Api\v1\VehicleController;
 use Illuminate\Support\Facades\Route;
 
 Route::post('/login', [AuthController::class, 'login']);
@@ -31,5 +32,8 @@ Route::middleware('auth:sanctum')->group(function () {
 
     Route::get('/films', [FilmController::class, 'index']);
     Route::get('/films/{id}', [FilmController::class, 'show']);
+
+    Route::get('/vehicles', [VehicleController::class, 'index']);
+    Route::get('/vehicles/{id}', [VehicleController::class, 'show']);
 
 });
