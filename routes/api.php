@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\v1\AuthController;
+use App\Http\Controllers\Api\v1\FilmController;
 use App\Http\Controllers\Api\v1\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -21,5 +22,13 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/users/{user}', [UserController::class, 'show'])->name('users.show');
     Route::patch('/users/{user}', [UserController::class, 'update']);
     Route::delete('/users/{user}', [UserController::class, 'destroy']);
+
+    /*
+    |--------------------------------------------------------------------------
+    | Ghibli endpoints
+    |--------------------------------------------------------------------------
+    */
+
+    Route::get('/films', [FilmController::class, 'index']);
 
 });
