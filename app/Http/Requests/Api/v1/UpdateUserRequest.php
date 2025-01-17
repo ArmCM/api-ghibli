@@ -13,7 +13,7 @@ class UpdateUserRequest extends ApiFormRequest
      */
     public function authorize(): bool
     {
-        return auth()->id() === $this->user()->id || $this->user()->hasRole('admin');
+        return true;
     }
 
     /**

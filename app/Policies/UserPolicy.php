@@ -47,7 +47,11 @@ class UserPolicy
      */
     public function update(User $user, User $model): bool
     {
-        return false;
+        if ($user->id !== $model->id && !$user->hasRole('admin')) {
+            throw new UserAuthorizationException('No tienes permiso para actualizar el perfil de otro usuario.');
+        }
+
+        return true;
     }
 
     /**

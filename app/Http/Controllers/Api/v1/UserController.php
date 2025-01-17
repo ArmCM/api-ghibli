@@ -53,6 +53,8 @@ class UserController extends Controller
 
     public function update(UpdateUserRequest $request, User $user): JsonResponse
     {
+        Gate::authorize('update', $user);
+
         $validatedData = $request->validated();
 
         tap(User::findOrFail($user->id), function ($user) use ($validatedData) {
