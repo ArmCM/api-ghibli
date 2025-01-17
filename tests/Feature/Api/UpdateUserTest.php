@@ -81,7 +81,7 @@ class UpdateUserTest extends TestCase
     }
 
     #[Test]
-    public function a_user_can_update_partial_detail_information()
+    public function a_user_can_update_partial_information()
     {
         $user = User::factory()->films()->create([
             'name' => 'john doe',
@@ -101,6 +101,35 @@ class UpdateUserTest extends TestCase
         $this->assertDatabaseHas('users', [
             'name' => 'jane doe',
             'email' => 'john_01@gmail.com',
+        ]);
+    }
+
+    #[Test]
+    public function an_user_cannot_update_detail_the_other_users()
+    {
+        $userFilms = User::factory()->films()->create([
+            'name' => 'john doe',
+            'email' => 'john_01@gmail.com',
+        ]);
+
+        $userVehicle = User::factory()->vehicles()->create([
+            'name' => 'jane doe',
+            'email' => 'jane_01@gmail.com',
+        ]);
+
+        $response = $this->actingAs($userFilms)->patch("/api/v1/users/$userVehicle->id", [
+            'name' => 'Adam Doe',
+        ]);
+
+        $response->assertStatus(403);
+
+        $response->assertJson([
+            'status' => 'error',
+            'message' => 'No tienes permiso para actualizar el perfil de otro usuario.',
+            'errors' => [
+                'authorization' => 'Acceso denegado',
+            ],
+            'code' => 403,
         ]);
     }
 }
