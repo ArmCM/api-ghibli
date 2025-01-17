@@ -59,7 +59,11 @@ class UserPolicy
      */
     public function delete(User $user, User $model): bool
     {
-        return false;
+        if ($user->id !== $model->id && !$user->hasRole('admin')) {
+            throw new UserAuthorizationException('No tienes permiso para eliminar el perfil de otro usuario.');
+        }
+
+        return true;
     }
 
     /**
