@@ -29,7 +29,7 @@ class GhibliApi
                 $response->status(),
             ),
             default => $this->success(
-                'Vehículos encontrados',
+                'Recursos encontrados',
                 $response->json(),
                 $response->status(),
             ),

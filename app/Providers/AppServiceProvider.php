@@ -44,5 +44,13 @@ class AppServiceProvider extends ServiceProvider
 
             return true;
         });
+
+        Gate::define('view.all.locations', function ($user) {
+            if (!$user->can('view.locations') && !$user->hasRole('admin')) {
+                throw new UserAuthorizationException('No tienes permiso para consultar locaciones.');
+            }
+
+            return true;
+        });
     }
 }

@@ -36,6 +36,9 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/people', [PeopleController::class, 'index']);
     Route::get('/people/{id}', [PeopleController::class, 'show']);
 
+    Route::get('/locations', [LocationController::class, 'index']);
+    Route::get('/locations/{id}', [LocationController::class, 'show']);
+
 
     Route::get('/vehicles', [VehicleController::class, 'index']);
     Route::get('/vehicles/{id}', [VehicleController::class, 'show']);
