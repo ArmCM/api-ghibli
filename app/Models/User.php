@@ -47,4 +47,20 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    /*
+    |--------------------------------------------------------------------------
+    | Eloquent Methods
+    |--------------------------------------------------------------------------
+    */
+
+    public function isBasicRole(): bool
+    {
+        return ! $this->hasRole('admin');
+    }
+
+    public function cannotEliminate(int $modelId): bool
+    {
+        return $this->id !== $modelId && $this->isBasicRole();
+    }
 }
