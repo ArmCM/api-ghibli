@@ -2,6 +2,9 @@
 
 use App\Http\Controllers\Api\v1\AuthController;
 use App\Http\Controllers\Api\v1\FilmController;
+use App\Http\Controllers\Api\v1\LocationController;
+use App\Http\Controllers\Api\v1\PeopleController;
+use App\Http\Controllers\Api\v1\SpecieController;
 use App\Http\Controllers\Api\v1\UserController;
 use App\Http\Controllers\Api\v1\VehicleController;
 use Illuminate\Support\Facades\Route;
@@ -39,6 +42,8 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/locations', [LocationController::class, 'index']);
     Route::get('/locations/{id}', [LocationController::class, 'show']);
 
+    Route::get('/species', [SpecieController::class, 'index']);
+    Route::get('/species/{id}', [SpecieController::class, 'show']);
 
     Route::get('/vehicles', [VehicleController::class, 'index']);
     Route::get('/vehicles/{id}', [VehicleController::class, 'show']);

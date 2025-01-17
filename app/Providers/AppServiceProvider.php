@@ -52,5 +52,13 @@ class AppServiceProvider extends ServiceProvider
 
             return true;
         });
+
+        Gate::define('view.all.species', function ($user) {
+            if (!$user->can('view.species') && !$user->hasRole('admin')) {
+                throw new UserAuthorizationException('No tienes permiso para consultar especies.');
+            }
+
+            return true;
+        });
     }
 }
