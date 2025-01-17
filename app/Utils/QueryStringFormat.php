@@ -4,14 +4,10 @@ namespace App\Utils;
 
 use Illuminate\Support\Str;
 
-class QueryString
+class QueryStringFormat
 {
-    public static function toArray(string|null $queryString): array
+    public static function toArray(string $queryString): array
     {
-        if (is_null($queryString)) {
-            return [];
-        }
-
         return collect(self::splitQueryString($queryString))
             ->mapWithKeys(fn ($pair) => self::createKeyValueArray($pair))
             ->mapWithKeys(fn ($value, $key) => [self::normalizeKeys($key) => $value])
