@@ -28,7 +28,7 @@ class FilmController extends Controller
 
     public function show(Request $request, string $filmId): JsonResponse
     {
-        Gate::authorize('view.all.films');
+        Gate::authorize('show.detail.films');
 
         $queryParameters = QueryStringFormat::toArray($request->query(), $filmId);
 

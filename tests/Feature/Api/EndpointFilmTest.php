@@ -16,7 +16,7 @@ class EndpointFilmTest extends TestCase
     {
         $user = User::factory()->films()->create();
 
-        $response = $this->actingAs($user)->get("/api/v1/films");
+        $response = $this->actingAs($user)->get('/api/v1/films');
 
         $response->assertStatus(200);
 
@@ -33,17 +33,17 @@ class EndpointFilmTest extends TestCase
     {
         $user = User::factory()->vehicles()->create();
 
-        $response = $this->actingAs($user)->get("/api/v1/films");
+        $response = $this->actingAs($user)->get('/api/v1/films');
 
         $response->assertStatus(403);
 
         $response->assertExactJson([
-            "status" => "error",
-            "message" => "No tienes permiso para consultar peliculas.",
-            "errors" => [
-                "authorization" => "Acceso denegado"
+            'status' => 'error',
+            'message' => 'No tienes permiso para consultar peliculas.',
+            'errors' => [
+                'authorization' => 'Acceso denegado'
             ],
-            "code" => 403
+            'code' => 403
         ]);
     }
 
@@ -52,7 +52,7 @@ class EndpointFilmTest extends TestCase
     {
         $user = User::factory()->films()->create();
 
-        $response = $this->actingAs($user)->get("/api/v1/films?fields=id,title,description,release_date&limit=3");
+        $response = $this->actingAs($user)->get('/api/v1/films?fields=id,title,description,release_date&limit=3');
 
         $response->assertStatus(200);
 
@@ -64,13 +64,32 @@ class EndpointFilmTest extends TestCase
     {
         $user = User::factory()->films()->create();
 
-        $response = $this->actingAs($user)->get("/api/v1/films/:id");
+        $response = $this->actingAs($user)->get('/api/v1/films/:id');
 
         $response->assertStatus(200);
 
         $response->assertExactJson([
-            "message" => "No se encontraron resultados.",
-            "status_code" => 200
+            'message' => 'No se encontraron resultados.',
+            'status_code' => 200
+        ]);
+    }
+
+    #[Test]
+    public function display_error_message_if_a_user_dont_has_permission_to_view_details_films()
+    {
+        $user = User::factory()->vehicles()->create();
+
+        $response = $this->actingAs($user)->get('/api/v1/films/2baf70d1-42bb-4437-b551-e5fed5a87abe');
+
+        $response->assertStatus(403);
+
+        $response->assertExactJson([
+            'status' => 'error',
+            'message' => 'No tienes permiso para consultar detalle de peliculas.',
+            'errors' => [
+                'authorization' => 'Acceso denegado'
+            ],
+            'code' => 403,
         ]);
     }
 
@@ -79,7 +98,7 @@ class EndpointFilmTest extends TestCase
     {
         $user = User::factory()->films()->create();
 
-        $response = $this->actingAs($user)->get("/api/v1/films/2baf70d1-42bb-4437-b551-e5fed5a87abe?fields=id,title,original_title");
+        $response = $this->actingAs($user)->get('/api/v1/films/2baf70d1-42bb-4437-b551-e5fed5a87abe?fields=id,title,original_title');
 
         $response->assertStatus(200);
 
@@ -87,12 +106,12 @@ class EndpointFilmTest extends TestCase
 
         $response->assertExactJson([
             'status' => 'success',
-            'message' => 'Peliculas encontradas',
+            'message' => 'Recursos encontrados',
             'data' => [
                 [
                     'id' => '2baf70d1-42bb-4437-b551-e5fed5a87abe',
                     'title' => 'Castle in the Sky',
-                    'original_title' => "天空の城ラピュタ",
+                    'original_title' => '天空の城ラピュタ',
                 ]
             ],
             'status_code' => 200
@@ -104,13 +123,13 @@ class EndpointFilmTest extends TestCase
     {
         $user = User::factory()->films()->create();
 
-        $response = $this->actingAs($user)->get("/api/v1/films/2baf70d1");
+        $response = $this->actingAs($user)->get('/api/v1/films/2baf70d1');
 
         $response->assertStatus(200);
 
         $response->assertExactJson([
-            "message" => "No se encontraron resultados.",
-            "status_code" => 200
+            'message' => 'No se encontraron resultados.',
+            'status_code' => 200
         ]);
     }
 }
