@@ -35,18 +35,18 @@ Three methods are available to set up the project:
 Clone the repository
 
 ```shell
-  git clone git@github.com:ArmCM/api-ghibli.git
+git clone git@github.com:ArmCM/api-ghibli.git
 ```
 
 Enter the project directory `cd api-ghibli` and Install dependencies
 
 ```shell
-  composer install
+composer install
 ```
 Set up environment variables - copy `.env.example`
 
 ```shell
-  cp .env.example .env
+cp .env.example .env
 ```
 Setup database in `.env` file
 
@@ -59,23 +59,23 @@ Setup database in `.env` file
 Create app key
 
 ```shell
-  php artisan key:generate
+php artisan key:generate
 ```
 Run the migrations
 
 ```shell
-  php artisan migrate
+php artisan migrate
 ```
 
 Seed the database with dummy data and create roles and permissions
 
 ```shell
-  php artisan db:seed
+php artisan db:seed
 ```
 (**OPTIONAL**) In case you do not have a local server
 
 ```shell
-  php artisan serve
+php artisan serve
 ```
 
 ---
@@ -90,17 +90,17 @@ Seed the database with dummy data and create roles and permissions
 Clone the repository
 
 ```shell
-  git clone git@github.com:ArmCM/api-ghibli.git
+git clone git@github.com:ArmCM/api-ghibli.git
 ```
 Install project dependencies using Sail:
 
 ```shell
-    docker run --rm \
-        -u "$(id -u):$(id -g)" \
-        -v "$(pwd):/var/www/html" \
-        -w /var/www/html \
-        laravelsail/php83-composer:latest \
-        composer install --ignore-platform-reqs
+docker run --rm \
+    -u "$(id -u):$(id -g)" \
+    -v "$(pwd):/var/www/html" \
+    -w /var/www/html \
+    laravelsail/php83-composer:latest \
+    composer install --ignore-platform-reqs
 ```
 
 Initialize Docker at this point
@@ -108,7 +108,7 @@ Initialize Docker at this point
 Set up environment variables:
 
 ```shell
-  cp .env.example .env
+cp .env.example .env
 ```
 Setup database in `.env` file
 
@@ -121,31 +121,31 @@ Setup database in `.env` file
 Start containers:
 
 ```shell
-    ./vendor/bin/sail up -d
+./vendor/bin/sail up -d
 ```
 
 Generate application key
 
 ```shell
-  ./vendor/bin/sail artisan key:generate
+./vendor/bin/sail artisan key:generate
 ```
 
 Install dependencies
 
 ```shell
-    ./vendor/bin/sail composer install
+./vendor/bin/sail composer install
 ```
 
 Run migrations
 
 ```shell
-    ./vendor/bin/sail artisan migrate
+./vendor/bin/sail artisan migrate
 ```
 
 Seed the database with dummy data
 
 ```
-    ./vendor/bin/sail artisan db:seed
+   ./vendor/bin/sail artisan db:seed
 ```
 
 ### **The application will be available at** http://localhost:8000 🚀
@@ -154,13 +154,13 @@ Seed the database with dummy data
 Run Tests 🧪
 
 ```shell
-    ./vendor/bin/sail artisan test
+./vendor/bin/sail artisan test
 ```
 
 Stop containers ⚠️
 
 ```shell
-    ./vendor/bin/sail down -v
+./vendor/bin/sail down -v
 ```
 
 ---
