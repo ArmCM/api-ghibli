@@ -8,6 +8,7 @@ use App\Http\Requests\Api\v1\UpdateUserRequest;
 use App\Http\Resources\UserResource;
 use App\Models\User;
 use App\Traits\ApiResponses;
+use App\UseCases\UserRegistration;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Illuminate\Support\Facades\Gate;
@@ -16,6 +17,11 @@ use Illuminate\Support\Facades\Hash;
 class UserController extends Controller
 {
     use ApiResponses;
+
+    public function __construct(protected UserRegistration $registerUser)
+    {
+
+    }
 
     public function index(): AnonymousResourceCollection
     {
@@ -26,17 +32,18 @@ class UserController extends Controller
 
     public function store(StoreUserRequest $request): JsonResponse
     {
-        $validatedData = $request->validated();
+        $user = $this->registerUser->register($request->validated());
 
-        tap(User::create([
-            'name' => $validatedData['name'],
-            'email' => $validatedData['email'],
-            'password' => Hash::make($validatedData['password']),
-        ]), function ($user) use ($validatedData) {
-            $user->assignRole($validatedData['role']);
-        });
-
-        return $this->success('Usuario creado exitosamente.', [], 201);
+        return $this->success(
+            'Usuario creado exitosamente.',
+            [
+                'id' => $user->id,
+                'name' => $user->name,
+                'email' => $user->email,
+                'role' => $user->roles->first()->name,
+            ],
+            201,
+        );
     }
 
     public function show(User $user): UserResource
