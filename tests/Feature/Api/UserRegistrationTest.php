@@ -56,7 +56,12 @@ class UserRegistrationTest extends TestCase
         $response->assertExactJson([
             'status' => 'success',
             'message' => 'Usuario creado exitosamente.',
-            'data' => [],
+            'data' => [
+                'id' => 2,
+                'name' => 'John Doe',
+                'email' => 'john_doe@gmail.com',
+                'role' => 'films',
+            ],
             'status_code' => 201,
         ]);
 
@@ -66,6 +71,7 @@ class UserRegistrationTest extends TestCase
         ]);
 
         $user = User::where('email', 'john_doe@gmail.com')->first();
+
         $this->assertTrue($user->hasRole('films'));
     }
 
