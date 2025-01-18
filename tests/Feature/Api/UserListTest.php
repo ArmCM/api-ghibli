@@ -38,18 +38,20 @@ class UserListTest extends TestCase
         $response->assertStatus(200);
 
         $response->assertJsonStructure([
+            'status',
+            'message',
             'data' => [
                 '*' => [
-                    'type',
                     'id',
-                    'attributes' => [
-                        'name',
-                        'email',
-                        'role',
-                    ],
-                    'links',
+                    'name',
+                    'email',
+                    'email_verified_at',
+                    'created_at',
+                    'updated_at',
                 ],
             ],
+            'options',
+            'status_code',
         ]);
 
         $this->assertCount(10, $response->json('data'));

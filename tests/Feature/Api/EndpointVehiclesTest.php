@@ -114,6 +114,7 @@ class EndpointVehiclesTest extends TestCase
                     'vehicle_class' => "Airship",
                 ]
             ],
+            'options' => [],
             'status_code' => 200
         ]);
     }

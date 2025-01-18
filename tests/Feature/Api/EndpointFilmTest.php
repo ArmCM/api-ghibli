@@ -114,6 +114,7 @@ class EndpointFilmTest extends TestCase
                     'original_title' => '天空の城ラピュタ',
                 ]
             ],
+            'options' => [],
             'status_code' => 200
         ]);
     }
