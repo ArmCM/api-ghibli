@@ -29,6 +29,14 @@ class AppServiceProvider extends ServiceProvider
             return true;
         });
 
+        Gate::define('show.detail.films', function ($user) {
+            if (!$user->can('show.films') && !$user->hasRole('admin')) {
+                throw new UserAuthorizationException('No tienes permiso para consultar detalle de peliculas.');
+            }
+
+            return true;
+        });
+
         Gate::define('view.all.vehicles', function ($user) {
             if (!$user->can('view.vehicles') && !$user->hasRole('admin')) {
                 throw new UserAuthorizationException('No tienes permiso para consultar vehículos.');
