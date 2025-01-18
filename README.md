@@ -170,6 +170,11 @@ Stop containers ⚠️
 ### Requirements
 
 - Docker Desktop
+ 
+switch to branch `feature/docker_compose` `->` 
+https://github.com/ArmCM/api-ghibli/pull/14
+
+use `docker-compose.yml` from this branch ⚠️
 
 ### Installation Steps
 
