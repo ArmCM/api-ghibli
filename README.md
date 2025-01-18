@@ -13,8 +13,8 @@ The API is designed to manage users with role-based access and integrates with t
 
 Three methods are available to set up the project:
 
-- #### [Traditional Setup (Local Environment)](#traditional-setup) optional
-- #### [Using Laravel Sail (Docker)](#using-laravel-sail-(docker)) default main branch
+- #### [Traditional Setup (Local Environment)](#traditional-setup-local-environment) optional
+- #### [Using Laravel Sail (Docker)](#using-laravel-sail-docker) default main branch
 - #### [Using Docker](#using-docker) optional
 
 > uncomment the environment variables for the Database in the .env.example file depending on the environment of your choice
