@@ -28,7 +28,7 @@ class PeopleController extends Controller
 
     public function show(Request $request, string $filmId): JsonResponse
     {
-        Gate::authorize('view.all.people');
+        Gate::authorize('view.detail.people');
 
         $queryParameters = QueryStringFormat::toArray($request->query(), $filmId);
 

@@ -75,6 +75,25 @@ class EndpointSpeciesTest extends TestCase
     }
 
     #[Test]
+    public function display_error_message_if_a_user_dont_has_permission_to_view_details_species()
+    {
+        $user = User::factory()->vehicles()->create();
+
+        $response = $this->actingAs($user)->get('/api/v1/species/af3910a6-429f-4c74-9ad5-dfe1c4aa04f2');
+
+        $response->assertStatus(403);
+
+        $response->assertExactJson([
+            'status' => 'error',
+            'message' => 'No tienes permiso para consultar detalle de especies.',
+            'errors' => [
+                'authorization' => 'Acceso denegado'
+            ],
+            'code' => 403,
+        ]);
+    }
+
+    #[Test]
     public function can_find_species_by_id_and_append_fields()
     {
         $user = User::factory()->species()->create();

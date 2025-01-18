@@ -75,6 +75,25 @@ class EndpointPeopleTest extends TestCase
     }
 
     #[Test]
+    public function display_error_message_if_a_user_dont_has_permission_to_view_details_people()
+    {
+        $user = User::factory()->vehicles()->create();
+
+        $response = $this->actingAs($user)->get('/api/v1/people/267649ac-fb1b-11eb-9a03-0242ac130003');
+
+        $response->assertStatus(403);
+
+        $response->assertExactJson([
+            'status' => 'error',
+            'message' => 'No tienes permiso para consultar detalle de personas.',
+            'errors' => [
+                'authorization' => 'Acceso denegado'
+            ],
+            'code' => 403,
+        ]);
+    }
+
+    #[Test]
     public function can_find_people_by_id_and_append_fields()
     {
         $user = User::factory()->people()->create();
@@ -87,7 +106,7 @@ class EndpointPeopleTest extends TestCase
 
         $response->assertExactJson([
             'status' => 'success',
-            'message' => 'Personas encontradas',
+            'message' => 'Recursos encontrados',
             'data' => [
                 [
                     'eye_color' => 'Green',

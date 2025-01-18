@@ -7,7 +7,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use PHPUnit\Framework\Attributes\Test;
 use Tests\TestCase;
 
-class UserRoleVehiclesTest extends TestCase
+class EndpointVehiclesTest extends TestCase
 {
     use RefreshDatabase;
 
@@ -71,6 +71,25 @@ class UserRoleVehiclesTest extends TestCase
         $response->assertExactJson([
             "message" => "No se encontraron resultados.",
             "status_code" => 200
+        ]);
+    }
+
+    #[Test]
+    public function display_error_message_if_a_user_dont_has_permission_to_view_details_vehicles()
+    {
+        $user = User::factory()->films()->create();
+
+        $response = $this->actingAs($user)->get('/api/v1/vehicles/4e09b023-f650-4747-9ab9-eacf14540cfb');
+
+        $response->assertStatus(403);
+
+        $response->assertExactJson([
+            'status' => 'error',
+            'message' => 'No tienes permiso para consultar detalle de vehículos.',
+            'errors' => [
+                'authorization' => 'Acceso denegado'
+            ],
+            'code' => 403,
         ]);
     }
 

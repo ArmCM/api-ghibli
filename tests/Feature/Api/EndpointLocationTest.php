@@ -75,6 +75,25 @@ class EndpointLocationTest extends TestCase
     }
 
     #[Test]
+    public function display_error_message_if_a_user_dont_has_permission_to_view_details_locations()
+    {
+        $user = User::factory()->vehicles()->create();
+
+        $response = $this->actingAs($user)->get('/api/v1/locations/11014596-71b0-4b3e-b8c0-1c4b15f28b9a');
+
+        $response->assertStatus(403);
+
+        $response->assertExactJson([
+            'status' => 'error',
+            'message' => 'No tienes permiso para consultar detalle de locaciones.',
+            'errors' => [
+                'authorization' => 'Acceso denegado'
+            ],
+            'code' => 403,
+        ]);
+    }
+
+    #[Test]
     public function can_find_locations_by_id_and_append_fields()
     {
         $user = User::factory()->locations()->create();

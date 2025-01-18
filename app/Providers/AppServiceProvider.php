@@ -45,9 +45,25 @@ class AppServiceProvider extends ServiceProvider
             return true;
         });
 
+        Gate::define('view.detail.vehicles', function ($user) {
+            if (!$user->can('show.vehicles') && !$user->hasRole('admin')) {
+                throw new UserAuthorizationException('No tienes permiso para consultar detalle de vehículos.');
+            }
+
+            return true;
+        });
+
         Gate::define('view.all.people', function ($user) {
             if (!$user->can('view.people') && !$user->hasRole('admin')) {
                 throw new UserAuthorizationException('No tienes permiso para consultar personas.');
+            }
+
+            return true;
+        });
+
+        Gate::define('view.detail.people', function ($user) {
+            if (!$user->can('show.people') && !$user->hasRole('admin')) {
+                throw new UserAuthorizationException('No tienes permiso para consultar detalle de personas.');
             }
 
             return true;
@@ -61,9 +77,25 @@ class AppServiceProvider extends ServiceProvider
             return true;
         });
 
+        Gate::define('view.detail.locations', function ($user) {
+            if (!$user->can('show.locations') && !$user->hasRole('admin')) {
+                throw new UserAuthorizationException('No tienes permiso para consultar detalle de locaciones.');
+            }
+
+            return true;
+        });
+
         Gate::define('view.all.species', function ($user) {
             if (!$user->can('view.species') && !$user->hasRole('admin')) {
                 throw new UserAuthorizationException('No tienes permiso para consultar especies.');
+            }
+
+            return true;
+        });
+
+        Gate::define('view.detail.species', function ($user) {
+            if (!$user->can('show.species') && !$user->hasRole('admin')) {
+                throw new UserAuthorizationException('No tienes permiso para consultar detalle de especies.');
             }
 
             return true;

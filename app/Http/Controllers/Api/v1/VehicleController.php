@@ -28,7 +28,7 @@ class VehicleController extends Controller
 
     public function show(Request $request, string $vehicleId): JsonResponse
     {
-        Gate::authorize('view.all.vehicles');
+        Gate::authorize('view.detail.vehicles');
 
         $queryParameters = QueryStringFormat::toArray($request->query(), $vehicleId);
 
