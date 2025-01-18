@@ -53,7 +53,12 @@ class UserRegistrationTest extends TestCase
             'role' => 'films',
         ]));
 
-        $response->assertStatus(201);
+        $response->assertExactJson([
+            'status' => 'success',
+            'message' => 'Usuario creado exitosamente.',
+            'data' => [],
+            'status_code' => 201,
+        ]);
 
         $this->assertDatabaseHas('users', [
             'name' => 'John Doe',
@@ -76,12 +81,12 @@ class UserRegistrationTest extends TestCase
         $response->assertStatus(403);
 
         $response->assertExactJson([
-            "status" => "error",
-            "message" => "No está autorizado para realizar esta acción.",
-            "errors" => [
-                "authorization" => "Acceso denegado"
+            'status' => 'error',
+            'message' => 'No está autorizado para realizar esta acción.',
+            'errors' => [
+                'authorization' => 'Acceso denegado'
             ],
-            "code" => 403
+            'code' => 403
         ]);
     }
 
