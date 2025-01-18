@@ -4,34 +4,33 @@
 
 The API is designed to manage users with role-based access and integrates with the Studio Ghibli API for data retrieval based on user roles.
 
-- ### [Instalacion](#instalacion)
-- ### [Documentacion](#documentacion)
-- ### Comandos utiles
+- ### [Installation](#installation)
+- ### [Documentation](#documentation)
 
-
-
-# Instalacion
+# Installation
 
 ### Instructions
 
-Para levantar el proyecto se pone a disposicion 3 formas de hacerlo
+Three methods are available to set up the project:
 
-- #### [Configuración Tradicional (entorno Local)](#configuración-tradicional)
-- #### [Usando Laravel Sail (Docker)](#usando-laravel-sail-(Docker))
-- #### [Usando Docker](#usando-docker)
+- #### [Traditional Setup (Local Environment)](#traditional-setup) optional
+- #### [Using Laravel Sail (Docker)](#using-laravel-sail-(docker)) default main branch
+- #### [Using Docker](#using-docker) optional
+
+> uncomment the environment variables for the Database in the .env.example file depending on the environment of your choice
 
 ---
 
-## Configuración Tradicional (entorno Local)
+## Traditional Setup (Local Environment)
 
 ### Prerequisites:
 
-- PHP >= 8.2
+- PHP `>=` 8.2
 - Composer
-- MySQL/MariaDB
-- Node.js y npm
+- MySQL `>=` 8.4 / MariaDB `>=` 10
+- Node.js and npm latests version
 
-### pasos de instalacion
+### Installation Steps
 
 Clone the repository
 
@@ -39,12 +38,12 @@ Clone the repository
   git clone git@github.com:ArmCM/api-ghibli.git
 ```
 
-Entrar al proyecto `cd api-ghibli` e Install dependencies
+Enter the project directory `cd api-ghibli` and Install dependencies
 
 ```shell
   composer install
 ```
-Definir archivo de variables de entorno - copiar`.env.example`
+Set up environment variables - copy `.env.example`
 
 ```shell
   cp .env.example .env
@@ -68,7 +67,7 @@ Run the migrations
   php artisan migrate
 ```
 
-Seed the database with dummy data
+Seed the database with dummy data and create roles and permissions
 
 ```shell
   php artisan db:seed
@@ -76,27 +75,24 @@ Seed the database with dummy data
 (**OPTIONAL**) In case you do not have a local server
 
 ```shell
-  php artisan run serve
+  php artisan serve
 ```
 
 ---
-## Usando Laravel Sail (Docker)
+## Using Laravel Sail (Docker)
 
-### Requisitos:
+### Requirements:
 
 - Docker Desktop
-- Docker Compose
 
-### Pasos de Instalación
-
-Instalar dependencias del proyecto usando Sail:
+### Installation Steps
 
 Clone the repository
 
 ```shell
   git clone git@github.com:ArmCM/api-ghibli.git
 ```
-Instalar dependencias del proyecto usando Sail:
+Install project dependencies using Sail:
 
 ```shell
     docker run --rm \
@@ -107,9 +103,9 @@ Instalar dependencias del proyecto usando Sail:
         composer install --ignore-platform-reqs
 ```
 
-Inicializa Docker en este punto
+Initialize Docker at this point
 
-Configurar variables de entorno:
+Set up environment variables:
 
 ```shell
   cp .env.example .env
@@ -122,25 +118,25 @@ Setup database in `.env` file
   DB_PASSWORD=password
 ```
 
-Iniciar contenedores:
+Start containers:
 
 ```shell
     ./vendor/bin/sail up -d
 ```
 
-Generar clave de aplicación
+Generate application key
 
 ```shell
   ./vendor/bin/sail artisan key:generate
 ```
 
-Instalar dependencias
+Install dependencies
 
 ```shell
     ./vendor/bin/sail composer install
 ```
 
-Correr las migraciones
+Run migrations
 
 ```shell
     ./vendor/bin/sail artisan migrate
@@ -152,16 +148,16 @@ Seed the database with dummy data
     ./vendor/bin/sail artisan db:seed
 ```
 
-**La aplicación estará disponible en** http://localhost:8000 🚀
+### **The application will be available at** http://localhost:8000 🚀
 
 
-Ejecutar los Test 🧪
+Run Tests 🧪
 
 ```shell
     ./vendor/bin/sail artisan test
 ```
 
-Detener los contedores ⚠️
+Stop containers ⚠️
 
 ```shell
     ./vendor/bin/sail down -v
@@ -169,14 +165,13 @@ Detener los contedores ⚠️
 
 ---
 
-## Usando Docker
+## Using Docker
 
-### Requisitos
+### Requirements
 
-- Docker
-- Docker Compose
+- Docker Desktop
 
-### Pasos de Instalación
+### Installation Steps
 
 Clone the repository
 
@@ -184,40 +179,55 @@ Clone the repository
   git clone git@github.com:ArmCM/api-ghibli.git
 ```
 
-Configurar variables de entorno:
+Set up environment variables:
 
 ```shell
   cp .env.example .env
 ```
+Initialize Docker at this point
 
-Construir y levantar contenedores:
+Build and start containers:
 
 ```shell
   docker-compose up -d --build
 ```
-Instalar dependencias:
+Install dependencies:
 
 ```shell
   docker-compose exec app composer install
 ```
 
-Generar clave de aplicación:
+Generate application key:
 
 ```shell
     docker-compose exec app php artisan key:generate
 ```
 
-Ejecutar migraciones
+Run migrations
 
 ```shell
     docker-compose exec app php artisan migrate
 ```
+Seed the database with dummy data and create roles and permissions
 
-Ejecutar los Test 🧪
+```shell
+    docker-compose exec app php artisan db:seed
+```
+
+### **The application will be available at** http://localhost:8000 🚀
+
+Run Tests 🧪
 
 ```shell
     docker-compose exec app php artisan test
 ```
 
-**La aplicación estará disponible en** http://localhost:8000 🚀
+Stop and remove containers
 
+```shell
+docker-compose down -v
+```
+
+## Documentation
+
+to test the endpoints I send an invitation to postman's workspace to this e-mail address `guillermo.rodriguez@banpay.com`
