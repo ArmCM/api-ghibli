@@ -235,4 +235,6 @@ docker-compose down -v
 
 ## Documentation
 
-to test the endpoints I send an invitation to postman's workspace to this e-mail address `guillermo.rodriguez@banpay.com`
+v1.0.01
+
+https://github.com/ArmCM/api-ghibli/releases/tag/v1.0.0
