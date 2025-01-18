@@ -114,6 +114,7 @@ class EndpointLocationTest extends TestCase
                     'surface_water' => "40",
                 ]
             ],
+            'options' => [],
             'status_code' => 200
         ]);
     }

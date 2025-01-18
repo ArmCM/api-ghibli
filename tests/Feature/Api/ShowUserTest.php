@@ -26,6 +26,8 @@ class ShowUserTest extends TestCase
         $response->assertStatus(200);
 
         $response->assertExactJson([
+            'status' => 'success',
+            'message' => 'Usuario encontrado.',
             'data' => [
                 'type' => 'user',
                 'id' => $films->id,
@@ -40,6 +42,8 @@ class ShowUserTest extends TestCase
                     'self' => route('users.show', $films->id)
                 ]
             ],
+            'options' => [],
+            'status_code' => 200,
         ]);
     }
 
@@ -56,6 +60,7 @@ class ShowUserTest extends TestCase
         $response->assertStatus(200);
 
         $response->assertExactJson([
+            'message' => 'Usuario encontrado.',
             'data' => [
                 'type' => 'user',
                 'id' => $userFilms->id,
@@ -70,6 +75,9 @@ class ShowUserTest extends TestCase
                     'self' => route('users.show', $userFilms->id)
                 ]
             ],
+            'options' => [],
+            'status' => 'success',
+            'status_code' => 200,
         ]);
     }
 

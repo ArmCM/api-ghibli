@@ -5,12 +5,10 @@ namespace App\Http\Controllers\Api\v1;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\v1\StoreUserRequest;
 use App\Http\Requests\Api\v1\UpdateUserRequest;
-use App\Http\Resources\UserResource;
 use App\Models\User;
 use App\Traits\ApiResponses;
 use App\UseCases\UserRegistration;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Hash;
 
@@ -23,11 +21,31 @@ class UserController extends Controller
 
     }
 
-    public function index(): AnonymousResourceCollection
+    public function index(): JsonResponse
     {
         Gate::authorize('viewAny', User::class);
 
-        return UserResource::collection(User::paginate());
+        $collection = User::paginateWithRoles();
+
+        return $this->success
+        ('Usuarios recuperados exitosamente.',
+            $collection->items(),
+            200,
+            [
+                'links' => [
+                'first' => $collection->url(1),
+                'last' => $collection->url($collection->lastPage()),
+                'prev' => $collection->previousPageUrl(),
+                'next' => $collection->nextPageUrl(),
+            ],
+                'meta' => [
+                'current_page' => $collection->currentPage(),
+                'last_page' => $collection->lastPage(),
+                'per_page' => $collection->perPage(),
+                'total' => $collection->total(),
+            ],
+            ]
+        );
     }
 
     public function store(StoreUserRequest $request): JsonResponse
@@ -46,11 +64,27 @@ class UserController extends Controller
         );
     }
 
-    public function show(User $user): UserResource
+    public function show(User $user): JsonResponse
     {
         Gate::authorize('view', $user);
 
-        return UserResource::make($user);
+        return $this->success(
+            'Usuario encontrado.',
+            [
+                'type' => 'user',
+                'id' => $user->id,
+                'attributes' => [
+                    'name' => $user->name,
+                    'email' => $user->email,
+                    'role' => $user->getRoleNames()->first(),
+                    'created_at' => $user->created_at,
+                    'updated_at' => $user->updated_at,
+                ],
+                'links' => [
+                    'self' => route('users.show', ['user' => $user->id]),
+                ],
+            ]
+        );
     }
 
     public function update(UpdateUserRequest $request, User $user): JsonResponse

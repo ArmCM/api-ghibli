@@ -63,4 +63,17 @@ class User extends Authenticatable
     {
         return $this->id !== $modelId && $this->isBasicRole();
     }
+
+    public static function paginateWithRoles($perPage = 15)
+    {
+        $collection = self::paginate($perPage);
+
+        $usersWithRoles = $collection->getCollection()->map(function ($user) {
+            return array_merge($user->toArray(), [
+                'role' => $user->getRoleNames()->first(),
+            ]);
+        });
+
+        return $collection->setCollection($usersWithRoles);
+    }
 }

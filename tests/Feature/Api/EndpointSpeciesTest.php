@@ -113,6 +113,7 @@ class EndpointSpeciesTest extends TestCase
                     'classification' => 'Mammal',
                 ]
             ],
+            'options' => [],
             'status_code' => 200
         ]);
     }

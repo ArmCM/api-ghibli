@@ -24,6 +24,7 @@ class DeleteUserTest extends TestCase
             'status' => 'success',
             'message' => 'Usuario eliminado exitosamente.',
             'data' => [],
+            'options' => [],
             'status_code' => 200,
         ]);
     }
@@ -41,6 +42,7 @@ class DeleteUserTest extends TestCase
             'status' => 'success',
             'message' => 'Usuario eliminado exitosamente.',
             'data' => [],
+            'options' => [],
             'status_code' => 200,
         ]);
     }

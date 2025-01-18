@@ -62,6 +62,7 @@ class UserRegistrationTest extends TestCase
                 'email' => 'john_doe@gmail.com',
                 'role' => 'films',
             ],
+            'options' => [],
             'status_code' => 201,
         ]);
 

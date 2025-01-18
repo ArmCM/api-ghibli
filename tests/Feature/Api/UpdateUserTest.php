@@ -45,6 +45,7 @@ class UpdateUserTest extends TestCase
             'status' => 'success',
             'message' => 'Usuario actualizado exitosamente.',
             'data' => [],
+            'options' => [],
             'status_code' => 201,
         ]);
 
@@ -73,6 +74,7 @@ class UpdateUserTest extends TestCase
             'status' => 'success',
             'message' => 'Usuario actualizado exitosamente.',
             'data' => [],
+            'options' => [],
             'status_code' => 201,
         ]);
 
@@ -98,6 +100,7 @@ class UpdateUserTest extends TestCase
             'status' => 'success',
             'message' => 'Usuario actualizado exitosamente.',
             'data' => [],
+            'options' => [],
             'status_code' => 201,
         ]);
 

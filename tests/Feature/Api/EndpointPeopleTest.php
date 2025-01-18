@@ -115,6 +115,7 @@ class EndpointPeopleTest extends TestCase
                     'name' => 'Haku'
                 ]
             ],
+            'options' => [],
             'status_code' => 200
         ]);
     }
