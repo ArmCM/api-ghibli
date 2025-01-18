@@ -41,10 +41,11 @@ class UpdateUserTest extends TestCase
             'role' => 'species',
         ]);
 
-        $response->assertStatus(201);
-
-        $response->assertJson([
+        $response->assertExactJson([
+            'status' => 'success',
             'message' => 'Usuario actualizado exitosamente.',
+            'data' => [],
+            'status_code' => 201,
         ]);
 
         $this->assertDatabaseHas('users', [
@@ -68,10 +69,11 @@ class UpdateUserTest extends TestCase
             'role' => 'species',
         ]);
 
-        $response->assertStatus(201);
-
-        $response->assertJson([
+        $response->assertExactJson([
+            'status' => 'success',
             'message' => 'Usuario actualizado exitosamente.',
+            'data' => [],
+            'status_code' => 201,
         ]);
 
         $this->assertDatabaseHas('users', [
@@ -92,10 +94,11 @@ class UpdateUserTest extends TestCase
             'name' => 'jane doe',
         ]);
 
-        $response->assertStatus(201);
-
-        $response->assertJson([
+        $response->assertExactJson([
+            'status' => 'success',
             'message' => 'Usuario actualizado exitosamente.',
+            'data' => [],
+            'status_code' => 201,
         ]);
 
         $this->assertDatabaseHas('users', [

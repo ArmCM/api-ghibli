@@ -7,14 +7,17 @@ use App\Http\Requests\Api\v1\StoreUserRequest;
 use App\Http\Requests\Api\v1\UpdateUserRequest;
 use App\Http\Resources\UserResource;
 use App\Models\User;
+use App\Traits\ApiResponses;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
+    use ApiResponses;
 
-    public function index()
+    public function index(): AnonymousResourceCollection
     {
         Gate::authorize('viewAny', User::class);
 
@@ -33,12 +36,10 @@ class UserController extends Controller
             $user->assignRole($validatedData['role']);
         });
 
-        return response()->json([
-            'message' => 'Usuario creado exitosamente.',
-        ], 201);
+        return $this->success('Usuario creado exitosamente.', [], 201);
     }
 
-    public function show(User $user)
+    public function show(User $user): UserResource
     {
         Gate::authorize('view', $user);
 
@@ -66,19 +67,15 @@ class UserController extends Controller
             $user->save();
         });
 
-        return response()->json([
-            'message' => 'Usuario actualizado exitosamente.',
-        ], 201);
+        return $this->success('Usuario actualizado exitosamente.', [], 201);
     }
 
-    public function destroy(User $user)
+    public function destroy(User $user): JsonResponse
     {
         Gate::authorize('delete', $user);
 
         $user->delete();
 
-        return response()->json([
-            'message' => 'Usuario eliminado exitosamente.',
-        ], 200);
+        return $this->success('Usuario eliminado exitosamente.');
     }
 }

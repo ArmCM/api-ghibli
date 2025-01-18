@@ -20,10 +20,11 @@ class DeleteUserTest extends TestCase
 
         $response = $this->actingAs($admin)->delete("/api/v1/users/$user->id");
 
-        $response->assertStatus(200);
-
-        $response->assertJson([
+        $response->assertExactJson([
+            'status' => 'success',
             'message' => 'Usuario eliminado exitosamente.',
+            'data' => [],
+            'status_code' => 200,
         ]);
     }
 
@@ -36,8 +37,11 @@ class DeleteUserTest extends TestCase
 
         $response->assertStatus(200);
 
-        $response->assertJson([
+        $response->assertExactJson([
+            'status' => 'success',
             'message' => 'Usuario eliminado exitosamente.',
+            'data' => [],
+            'status_code' => 200,
         ]);
     }
 
