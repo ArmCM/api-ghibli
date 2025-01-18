@@ -28,7 +28,7 @@ class LocationController extends Controller
 
     public function show(Request $request, string $filmId): JsonResponse
     {
-        Gate::authorize('view.all.locations');
+        Gate::authorize('view.detail.locations');
 
         $queryParameters = QueryStringFormat::toArray($request->query(), $filmId);
 

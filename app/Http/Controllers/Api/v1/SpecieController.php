@@ -28,7 +28,7 @@ class SpecieController extends Controller
 
     public function show(Request $request, string $filmId): JsonResponse
     {
-        Gate::authorize('view.all.species');
+        Gate::authorize('view.detail.species');
 
         $queryParameters = QueryStringFormat::toArray($request->query(), $filmId);
 
