@@ -13,8 +13,10 @@ return Application::configure(basePath: dirname(__DIR__))
         apiPrefix: 'api/v1',
     )
     ->withMiddleware(function (Middleware $middleware) {
-        //
+        $middleware->append([
+            \App\Http\Middleware\CustomHttpNotFound::class,
+            \App\Http\Middleware\ValidTokenExpiration::class
+        ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {
-        //
     })->create();

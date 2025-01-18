@@ -27,24 +27,24 @@ class UserController extends Controller
 
         $collection = User::paginateWithRoles();
 
-        return $this->success
-        ('Usuarios recuperados exitosamente.',
+        return $this->success(
+            'Usuarios recuperados exitosamente.',
             $collection->items(),
             200,
             [
                 'links' => [
-                'first' => $collection->url(1),
-                'last' => $collection->url($collection->lastPage()),
-                'prev' => $collection->previousPageUrl(),
-                'next' => $collection->nextPageUrl(),
-            ],
+                    'first' => $collection->url(1),
+                    'last' => $collection->url($collection->lastPage()),
+                    'prev' => $collection->previousPageUrl(),
+                    'next' => $collection->nextPageUrl(),
+                ],
                 'meta' => [
-                'current_page' => $collection->currentPage(),
-                'last_page' => $collection->lastPage(),
-                'per_page' => $collection->perPage(),
-                'total' => $collection->total(),
+                    'current_page' => $collection->currentPage(),
+                    'last_page' => $collection->lastPage(),
+                    'per_page' => $collection->perPage(),
+                    'total' => $collection->total(),
+                ],
             ],
-            ]
         );
     }
 
