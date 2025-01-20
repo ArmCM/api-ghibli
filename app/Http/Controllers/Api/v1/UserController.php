@@ -8,15 +8,15 @@ use App\Http\Requests\Api\v1\UpdateUserRequest;
 use App\Models\User;
 use App\Traits\ApiResponses;
 use App\UseCases\UserRegistration;
+use App\UseCases\UserUpdate;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Gate;
-use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
     use ApiResponses;
 
-    public function __construct(protected UserRegistration $registerUser)
+    public function __construct(protected UserRegistration $registerUser, protected UserUpdate $userUpdate)
     {
 
     }
@@ -91,22 +91,7 @@ class UserController extends Controller
     {
         Gate::authorize('update', $user);
 
-        $validatedData = $request->validated();
-
-        tap(User::findOrFail($user->id), function ($user) use ($validatedData) {
-            $user->fill(collect($validatedData)
-                ->only(['name', 'email'])
-                ->when($validatedData['password'] ?? null, function ($collection) use ($validatedData) {
-                    return $collection->put('password', Hash::make($validatedData['password']));
-                })
-                ->toArray()
-            );
-
-            optional($validatedData)['role'] && $user->syncRoles($validatedData['role']);
-
-
-            $user->save();
-        });
+        $this->userUpdate->update($request->validated(), $user->id);
 
         return $this->success('Usuario actualizado exitosamente.', [], 201);
     }
